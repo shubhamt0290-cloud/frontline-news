@@ -1,0 +1,85 @@
+{% load static %}
+{# added by shubham - shared layout: navbar, search, messages, footer. Every page extends this. #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Front Line — Daily Index{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}Latest general, sports and technology news.{% endblock %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/site.css' %}">
+<script src="{% static 'js/load-more.js' %}" defer></script>{# added by shubham - Load more button #}
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topstrip">
+    <span>{% now "l · j F Y" %}</span>
+    <div class="links">
+      {% if user.is_authenticated %}
+        <span>Hi, {{ user.username }}</span>
+        <a href="{% url 'news:create' %}">Write a post</a>
+        <a href="{% url 'news:my_posts' %}">My posts</a>
+        {% if user.is_staff %}<a href="{% url 'admin:index' %}">Admin</a>{% endif %}
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="link-button">Sign out</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Sign in</a>
+        <a href="{% url 'signup' %}">Subscribe</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="masthead-row">
+      <a class="masthead" href="{% url 'home' %}">Front Line<span class="accent-dot">.</span></a>
+      <div class="edition-tag">
+        <strong>Daily Index</strong>
+        {% if last_updated %}Updated {{ last_updated|timesince }} ago{% else %}General · Sports · Technology{% endif %}
+      </div>
+    </div>
+    <nav class="index-box" aria-label="Sections">
+      <a href="{% url 'news:category' 'General' %}" {% if category == 'General' %}class="active"{% endif %}><span>01 · News</span><span class="dot">→</span></a>
+      <a href="{% url 'news:category' 'Sports' %}" {% if category == 'Sports' %}class="active"{% endif %}><span>02 · Sports</span><span class="dot">→</span></a>
+      <a href="{% url 'news:category' 'Technology' %}" {% if category == 'Technology' %}class="active"{% endif %}><span>03 · Tech</span><span class="dot">→</span></a>
+      <form class="search-form" method="get" action="{% url 'news:search' %}" role="search">
+        <input type="search" name="q" value="{{ query|default:'' }}" placeholder="Search news…" aria-label="Search news" maxlength="100">
+        <button type="submit">Search</button>
+      </form>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <span>© {% now "Y" %} Front Line — Daily Index</span>
+      <span>
+        {% if contact_email %}Contact: <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> &nbsp;·&nbsp; {% endif %}{# added by shubham - contact email #}
+        {% if contact_phone %}Ph: <a href="tel:{{ contact_phone_link }}">{{ contact_phone }}</a> &nbsp;·&nbsp; {% endif %}{# added by shubham - phone number, tap to call #}
+        {% if linkedin_url %}<a href="{{ linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a> &nbsp;·&nbsp; {% endif %}{# added by shubham - LinkedIn profile #}
+        Headlines via <a href="https://gnews.io" target="_blank" rel="noopener">GNews</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

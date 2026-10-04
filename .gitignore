@@ -1,0 +1,11 @@
+# added by shubham - keep secrets, local data and generated files out of git
+.env
+env/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.sqlite3
+*.sqlite3.bak
+blog_main/staticfiles/
+.vscode/

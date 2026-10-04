@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{# added by shubham - category page now uses the shared layout, news cards and pagination #}
+{% block title %}{{ category }} — Front Line{% endblock %}
+
+{% block content %}
+<section class="section cat-{{ category|lower }}">
+  <div class="section-banner">
+    <h1>{{ category }}</h1>
+    <span class="mono">{{ page_obj.paginator.count }} stor{{ page_obj.paginator.count|pluralize:"y,ies" }}</span>
+  </div>
+  <div class="card-grid" data-list>{# added by shubham - data-list: target for the Load more button #}
+    {% for article in page_obj %}
+      {% include "includes/news_card.html" %}
+    {% empty %}
+      <p class="empty">No stories in this category yet.</p>
+    {% endfor %}
+  </div>
+  {% include "includes/pagination.html" %}
+</section>
+{% endblock %}

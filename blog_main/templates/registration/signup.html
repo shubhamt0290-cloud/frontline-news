@@ -1,0 +1,11 @@
+{% extends "registration/auth_base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<h1>Create an account</h1>
+<form method="post">
+  {% csrf_token %}
+  {% include "registration/_fields.html" %}
+  <button type="submit">Create account</button>
+</form>
+<p class="alt">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+{% endblock %}

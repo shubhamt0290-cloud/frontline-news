@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{# added by shubham - search results page with optional category filter #}
+{% block title %}{% if query %}“{{ query }}” — {% endif %}Search — Front Line{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="section-banner">
+    <h1>Search</h1>
+    {% if page_obj %}<span class="mono">{{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }}</span>{% endif %}
+  </div>
+
+  <form class="filter-row" method="get" action="{% url 'news:search' %}" role="search">
+    <input type="search" name="q" value="{{ query }}" placeholder="Search headlines, summaries, sources…" aria-label="Search terms" maxlength="100">
+    <select name="category" aria-label="Category">
+      <option value="">All categories</option>
+      {% for value in categories %}<option value="{{ value }}" {% if value == selected %}selected{% endif %}>{{ value }}</option>{% endfor %}
+    </select>
+    <button class="btn" type="submit">Search</button>
+  </form>
+
+  {% if not query %}
+    <p class="empty">Type something to search all news.</p>
+  {% else %}
+    <div class="card-grid" data-list>{# added by shubham - data-list: target for the Load more button #}
+      {% for article in page_obj %}
+        {% include "includes/news_card.html" %}
+      {% empty %}
+        <p class="empty">No news matches “{{ query }}”.</p>
+      {% endfor %}
+    </div>
+    {% include "includes/pagination.html" %}
+  {% endif %}
+</section>
+{% endblock %}

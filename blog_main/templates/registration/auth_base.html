@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{% endblock %} — Front Line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EEF0EA;
+    --paper-raised: #FFFFFF;
+    --ink: #10201B;
+    --ink-soft: #536159;
+    --line: #CBD1C6;
+    --news: #E24E2B;
+    --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+    --font-body: "Source Serif 4", Georgia, serif;
+    --font-mono: "JetBrains Mono", "Courier New", monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color:inherit; }
+  :focus-visible{ outline: 3px solid var(--ink); outline-offset: 2px; }
+  .wrap{ max-width: 440px; margin: 0 auto; padding: 48px 16px; }
+  .masthead{
+    display:block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    padding-bottom: 16px;
+    border-bottom: 4px solid var(--ink);
+    margin-bottom: 32px;
+  }
+  .masthead span{ color: var(--news); }
+  .panel{ background: var(--paper-raised); border: 1px solid var(--line); padding: 28px; }
+  h1{ font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; margin-bottom: 20px; }
+  label{
+    display:block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  input{
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .field{ margin-bottom: 18px; }
+  .helptext, .field ul{ font-size: 0.82rem; color: var(--ink-soft); margin-top: 6px; list-style: none; }
+  .errorlist{ color: var(--news); font-size: 0.85rem; list-style: none; margin-bottom: 8px; }
+  button{
+    width: 100%;
+    padding: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--ink);
+    color: var(--paper-raised);
+    border: none;
+    cursor: pointer;
+  }
+  button:hover{ background: var(--news); }
+  .alt{ margin-top: 18px; font-size: 0.92rem; color: var(--ink-soft); text-align: center; }
+  .alt a{ color: var(--ink); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="masthead" href="{% url 'home' %}">Front Line<span>.</span></a>
+    <div class="panel">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</body>
+</html>

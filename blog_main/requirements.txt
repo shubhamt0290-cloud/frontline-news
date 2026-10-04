@@ -1,0 +1,4 @@
+# added by shubham - project dependencies (install with: pip install -r requirements.txt)
+Django==6.1
+requests==2.34.2
+python-dotenv==1.2.4

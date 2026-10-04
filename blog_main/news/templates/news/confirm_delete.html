@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{# added by shubham - delete confirmation page #}
+{% block title %}Delete post — Front Line{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <h1>Delete this post?</h1>
+  <p>“{{ object.title }}” will be permanently removed. This cannot be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="actions">
+      <button class="btn danger" type="submit">Yes, delete</button>
+      <a class="btn secondary" href="{{ object.get_absolute_url }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{# added by shubham - friendly 404 page (shown when DEBUG=False) #}
+{% block title %}Page not found — Front Line{% endblock %}
+{% block content %}
+<div class="panel">
+  <h1>Page not found</h1>
+  <p>The story you're looking for has moved or no longer exists.</p>
+  <div class="actions"><a class="btn" href="{% url 'home' %}">Back to the front page</a></div>
+</div>
+{% endblock %}

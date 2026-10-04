@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{# added by shubham - list of the logged-in user's own posts with edit/delete links #}
+{% block title %}My posts — Front Line{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="section-banner">
+    <h1>My posts</h1>
+    <a href="{% url 'news:create' %}">+ Write a post</a>
+  </div>
+  <ul class="post-list" data-list>{# added by shubham - data-list: target for the Load more button #}
+    {% for article in page_obj %}
+    <li>
+      <div>
+        <h3><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h3>
+        <span class="mono">{{ article.category }} · {{ article.published_at|date:"j M Y" }}{% if not article.is_active %} · hidden by admin{% endif %}</span>
+      </div>
+      <div class="row-actions">
+        <a href="{% url 'news:edit' article.pk %}">Edit</a>
+        <a href="{% url 'news:delete' article.pk %}">Delete</a>
+      </div>
+    </li>
+    {% empty %}
+    <li class="empty">You haven't written anything yet. <a href="{% url 'news:create' %}" style="text-decoration:underline">Write your first post</a>.</li>
+    {% endfor %}
+  </ul>
+  {% include "includes/pagination.html" %}
+</section>
+{% endblock %}

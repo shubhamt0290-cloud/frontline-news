@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{# added by shubham - create / edit post form #}
+{% block title %}{% if object %}Edit post{% else %}Write a post{% endif %} — Front Line{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <h1>{% if object %}Edit post{% else %}Write a post{% endif %}</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    <div class="field">
+      {{ field.label_tag }}
+      {{ field.errors }}
+      {{ field }}
+      {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
+    </div>
+    {% endfor %}
+    <div class="actions">
+      <button class="btn" type="submit">{% if object %}Save changes{% else %}Publish{% endif %}</button>
+      <a class="btn secondary" href="{% if object %}{{ object.get_absolute_url }}{% else %}{% url 'news:my_posts' %}{% endif %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
